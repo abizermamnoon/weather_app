@@ -1,9 +1,30 @@
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Location from "../components/Location";
+
 export default function Index() {
-    return (
-        <>
-            <h1>Hello world!</h1>
-            <p>This is a starter template you can use for Web Dev for Makers projects.</p>
-            <img src="/logo.png" alt="Web Dev for Makers Logo" />
-        </>
-    );
+    const[newLocation, setNewLocation] = useState("");
+    const[locations, setLocations] = useState<string[]>([]);
+
+    function onAdd(){
+        setLocations([...locations,newLocation]);
+        setNewLocation("");
+    }
+    return(
+        <div className = "px-4 mx-auto max-w-lg">
+            <div className = "flex items-center py-4">
+                <p className="font-bold"> WeatherApp</p>
+                <input className="ml-auto border border-black text-sm p-1 mr-2" 
+                type ="text" placeholder = "Add new location..." value = {newLocation}
+                onChange={e => setNewLocation(e.target.value)}/>
+                <button className = "p-1 text-sm bg-black text-white" onClick = {onAdd}>Add</button>
+            </div>
+            {locations.map(d => (
+                <Location location ={d}/>
+        
+            ))}
+            
+        </div>
+    )
+    
 }
